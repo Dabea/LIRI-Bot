@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Dabea/LIRI-Bot/issues"
   },
-  "homepage": "https://github.com/Dabea/LIRI-Bot#readme"
+  "homepage": "https://github.com/Dabea/LIRI-Bot#readme",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "twitter": "^1.7.1"
+  }
 }
