@@ -18,9 +18,9 @@ var Twitter = require('twitter');
 
  /**
   * Post Message to twitter
-  */
- client.post('statuses/update', {status: 'BATMAN'},  function(error, tweet, response) {
-    if(error) throw error;
-    console.log(tweet);  // Tweet body. 
-    console.log(response);  // Raw response object. 
-  });
+//   */
+//  client.post('statuses/update', {status: 'BATMAN'},  function(error, tweet, response) {
+//     if(error) throw error;
+//     console.log(tweet);  // Tweet body. 
+//     console.log(response);  // Raw response object. 
+//   });
