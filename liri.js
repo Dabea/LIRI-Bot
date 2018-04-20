@@ -61,7 +61,7 @@ function getSong(title = 'All the Small Things'){
 function getMovie(movie = 'Mr. Nobody'){
   movie = movie.replace(' ' , '+');
   var request = require('request');
-request('http://www.omdbapi.com/?apikey=trilogy&t=' + movie , function (error, response, body) {
+request('http://www.omdbapi.com/?apikey=trilogy&t=' + movie, function (error, response, body) {
   if(error){
     console.log('error:', error); // Print the error if one occurred
   }else{
