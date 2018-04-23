@@ -9,19 +9,31 @@ let params = {screen_name: 'DabeNeko'};
 let command = process.argv[2]
 let commandValue = process.argv[3]
 
-switch(command){
-  case 'my-tweets':
-      getTweets(commandValue);
-      break;
-  case 'spotify-this-song':
-      getSong(commandValue)
-      break;
-  case 'movie-this':
-      getMovie(commandValue)
-      break;    
-  default:
-      console.log('Please Input a command eg node liri.js my-tweets')    
+function runCommand(command){
+  switch(command){
+    case 'my-tweets':
+        getTweets(commandValue);
+        break;
+    case 'spotify-this-song':
+        getSong(commandValue)
+        break;
+    case 'movie-this':
+        getMovie(commandValue)
+        break; 
+    case 'do-what-it-says':
+        // const randomCommand = process.argv[4]
+        const fileText = fs.readFileSync('random.txt', 'utf8')
+        console.log(fileText);
+        commandValue = fileText.substr(fileText.indexOf(' ')+1);
+        parsedCommand = fileText.substr(0,fileText.indexOf(' '));  
+        runCommand(parsedCommand)
+        break;
+    default:
+        console.log('The Command Given was',command)
+        console.log('Please Input a command eg node liri.js my-tweets')    
+  }
 }
+
 
 /**
  * Will get the last 20 tweets on that user accout
@@ -66,7 +78,7 @@ function getSong(title = 'All the Small Things'){
 function getMovie(movie = 'Mr. Nobody'){
   movie = movie.replace(' ' , '+');
   var request = require('request');
-request('http://www.omdbapi.com/?apikey=trilogy&t=' + movie, function (error, response, body) {
+request('https://www.omdbapi.com/?apikey=trilogy&t=' + movie, function (error, response, body) {
   if(error){
     console.log('error:', error); // Print the error if one occurred
   }else{
@@ -86,6 +98,7 @@ function writeToLog(text){
   });
 }
 
+runCommand(command);
 
  /**
   * Post Message to twitter
