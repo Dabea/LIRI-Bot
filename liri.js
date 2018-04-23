@@ -2,6 +2,7 @@ require("dotenv").config();
 let keys = require('./keys');
 let Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
+var fs = require('fs');
 let spotify = new Spotify(keys.spotify);
 let client = new Twitter(keys.twitter);
 let params = {screen_name: 'DabeNeko'};
@@ -32,11 +33,13 @@ function getTweets(){
    if (!error) {
      for(let i = 0 ; i < tweets.length; i++){
       console.log(`${tweets[i].user.screen_name} :${tweets[i].text} **Posted At : ${tweets[i].created_at}` );
+      writeToLog(`${tweets[i].user.screen_name} :${tweets[i].text} **Posted At : ${tweets[i].created_at}`);
      }
    }
-   else(
+   else{
      console.log(error)
-   )
+     writeToLog(error);
+   }
  });
 }
 
@@ -52,9 +55,11 @@ function getSong(title = 'All the Small Things'){
     .then(function(response) {
       let template = `Artist Name: ${response.tracks.items[0].album.artists[0].name} \nTrack Name: ${response.tracks.items[0].name} \nPreview Link : ${response.tracks.items[0].external_urls.spotify} \nAblum: ${response.tracks.items[0].album.name}`;
       console.log(template);
+      writeToLog(template);
     })
     .catch(function(err) {
       console.log(err);
+      writeToLog(err);
     });
 }
 
@@ -68,11 +73,18 @@ request('http://www.omdbapi.com/?apikey=trilogy&t=' + movie, function (error, re
     console.log(body)
     const movieData = JSON.parse(body);
     console.log(`Title:${movieData.Title} \nYear:${movieData.Year} \nIMBD Rateing: ${movieData.imdbRating} \nTomatoes Rateing:movieData.Ratings[1].Value} \nCounty:${movieData.Country} \nPlot:${movieData.Plot} \nActors: ${movieData.Actors}`); // Print the HTML for the Google homepage.
+    writeToLog(`Title:${movieData.Title} \nYear:${movieData.Year} \nIMBD Rateing: ${movieData.imdbRating} \nTomatoes Rateing:movieData.Ratings[1].Value} \nCounty:${movieData.Country} \nPlot:${movieData.Plot} \nActors: ${movieData.Actors}`)
   }
 });
  
 }
 
+function writeToLog(text){
+  fs.appendFile('log.txt', `\n ${text}`, function (err) {
+    if (err) throw err;
+    console.log('The Log has been updated');
+  });
+}
 
 
  /**
